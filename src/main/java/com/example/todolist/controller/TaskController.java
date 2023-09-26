@@ -1,6 +1,6 @@
 package com.example.todolist.controller;
 
-import com.example.todolist.model.Task;
+import com.example.todolist.model.Tasks;
 import com.example.todolist.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,27 +16,27 @@ public class TaskController {
 
     //get all tasks
     @GetMapping({"/",""})
-    public ResponseEntity<Iterable<Task>> findAll() {
+    public ResponseEntity<Iterable<Tasks>> findAll() {
         return ResponseEntity.ok(taskService.findAll());
     }
 
 
     //get all tasks that are done
     @GetMapping("/is-done")
-    public ResponseEntity<Iterable<Task>> findAllDone() {
+    public ResponseEntity<Iterable<Tasks>> findAllDone() {
         return ResponseEntity.ok(taskService.getAllFav());
     }
 
 
     //create new task
     @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody Task task) {
-        return ResponseEntity.ok(taskService.save(task));
+    public ResponseEntity<?> create(@RequestBody Tasks tasks) {
+        return ResponseEntity.ok(taskService.save(tasks));
     }
 
 
     //update task to done
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> done(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.done(id));
     }

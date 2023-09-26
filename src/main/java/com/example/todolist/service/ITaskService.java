@@ -1,11 +1,11 @@
 package com.example.todolist.service;
 
-import com.example.todolist.model.Task;
+import com.example.todolist.model.Tasks;
 
 import java.util.Optional;
 
-public interface ITaskService extends IGeneralService<Task>{
-    Optional<Task> done(Long id);
+public interface ITaskService extends IGeneralService<Tasks>{
+    Optional<Tasks> done(Long id);
 
-    Iterable<Task> getAllFav();
+    Iterable<Tasks> getAllFav();
 }

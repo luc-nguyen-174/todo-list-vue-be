@@ -1,11 +1,12 @@
 package com.example.todolist.service.impl;
 
-import com.example.todolist.model.Task;
+import com.example.todolist.model.Tasks;
 import com.example.todolist.repo.ITaskRepo;
 import com.example.todolist.service.ITaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,12 +15,12 @@ public class TaskService implements ITaskService {
     private ITaskRepo taskRepo;
 
     @Override
-    public Optional<Task> findById(Long id) {
+    public Optional<Tasks> findById(Long id) {
         return taskRepo.findById(id);
     }
 
     @Override
-    public Task save(Task e) {
+    public Tasks save(Tasks e) {
         return taskRepo.save(e);
     }
 
@@ -29,24 +30,28 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public Iterable<Task> findAll() {
-        return taskRepo.findAll();
+    public Iterable<Tasks> findAll() {
+        List<Tasks> tasks = taskRepo.findAll();
+        if (tasks.isEmpty()) {
+            return null;
+        }
+        return tasks;
     }
 
     @Override
-    public Optional<Task> done(Long id) {
-        Optional<Task> optionalTask = taskRepo.findById(id);
+    public Optional<Tasks> done(Long id) {
+        Optional<Tasks> optionalTask = taskRepo.findById(id);
         if (optionalTask.isPresent()) {
-            Task task = optionalTask.get();
-            task.setDone(!task.isDone());
-            taskRepo.save(task);
-            return Optional.of(task);
+            Tasks tasks = optionalTask.get();
+            tasks.setDone(!tasks.isDone());
+            taskRepo.save(tasks);
+            return Optional.of(tasks);
         }
         return Optional.empty();
     }
 
     @Override
-    public Iterable<Task> getAllFav() {
+    public Iterable<Tasks> getAllFav() {
         return taskRepo.getAllFav();
     }
 }
